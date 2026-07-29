@@ -290,6 +290,17 @@ class DreameVacuumDevice:
                     if did in self._property_update_callback:
                         for callback in self._property_update_callback[did]:
                             callbacks.append([callback, current_value])
+            else:
+                # --- MOVA QUIRK: Strict Blacklisting ---
+                # If a Mova device returns an error, ensure it's removed from self.data 
+                # so it is never requested again in subsequent updates.
+                if self.info and self.info.model:
+                    model = self.info.model.lower()
+                    if "mova" in model or "p10" in model or "e30" in model:
+                        did = int(prop.get("did", -1))
+                        if did in self.data:
+                            _LOGGER.debug("Blacklisting unsupported property %s for Mova device", did)
+                            del self.data[did]
 
         if not self._ready:
             self.status.update_static_properties()
@@ -998,6 +1009,16 @@ class DreameVacuumDevice:
 
         if not self.device_connected:
             raise DeviceUpdateFailedException("Device cannot be reached")
+
+        # --- MOVA QUIRK: Conditional Bypassing ---
+        # Suppress the periodic polling loop for Mova models when docked/idle
+        # Placed after connection checks to ensure network drops trigger a reconnection.
+        if self.info and self.info.model and getattr(self, 'status', None):
+            model = self.info.model.lower()
+            if "mova" in model or "p10" in model or "e30" in model:
+                if self.status.docked and not self.status.running and not self.status.active:
+                    _LOGGER.debug("Bypassing KEEP_ALIVE update for Mova device in idle/docked state.")
+                    return
 
         self._update_running = True
 
