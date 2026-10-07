@@ -12,6 +12,20 @@
 
 Complete app replacement with Home Assistant for Dreame robot vacuums.
 
+> [!NOTE]
+> ### 🔧 Fork with Bug Fixes (MOVA Support & Ticking Fix)
+> This is a modified fork with fixes for MOVA vacuums (P10 Pro Ultra / E30):
+> - **Fixed mop ticking / micro-rotations on docking station** by disabling periodic `KEEP_ALIVE` polling.
+> - **Added support for MOVA P10 Pro Ultra** variant (`mova.vacuum.r24916`).
+>
+> 📥 **[Download dreame_vacuum.zip](dreame_vacuum.zip?raw=true)**
+>
+> #### Quick Installation:
+> 1. Download and extract [**`dreame_vacuum.zip`**](dreame_vacuum.zip?raw=true).
+> 2. Copy the **`dreame_vacuum`** folder into `/config/custom_components/` in Home Assistant.
+> 3. Restart Home Assistant (`Settings` → `System` → `Restart`).
+> 4. Clear browser cache (`Ctrl + F5`), go to `Settings` → `Devices & Services` → `Add Integration`, search for **Dreame Vacuum** and log in via **Movahome Account**.
+
 <img src="https://raw.githubusercontent.com/Tasshack/dreame-vacuum/master/docs/media/map.png" width="48%"><img src="https://raw.githubusercontent.com/Tasshack/dreame-vacuum/master/docs/media/map_app.png" width="48%">
 
 <img src="https://raw.githubusercontent.com/Tasshack/dreame-vacuum/master/docs/media/settings.png" width="48%"><img src="https://raw.githubusercontent.com/Tasshack/dreame-vacuum/master/docs/media/settings_app.png" width="48%">

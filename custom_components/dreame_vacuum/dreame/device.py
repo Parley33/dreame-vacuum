@@ -477,10 +477,10 @@ class DreameVacuumDevice:
             self._drying_progress_changed,
             DreameVacuumProperty.DRYING_PROGRESS,
         )
-        self.listen(
-            self._keep_alive_changed,
-            DreameVacuumProperty.KEEP_ALIVE,
-        )
+        # self.listen(
+        #     self._keep_alive_changed,
+        #     DreameVacuumProperty.KEEP_ALIVE,
+        # )
 
         self._protocol = DreameVacuumProtocol(
             self.host,
